@@ -25,7 +25,9 @@
   border-radius: 8px;
   background: #777777f4;
 }
-
+.color-nav {
+  
+}
 .directions {
   text-align: center;
   color: rgb(247, 244, 246);
@@ -42,13 +44,13 @@
   padding: 8px;
   border: 0;
   border-radius: 5px;
-  background: rgb(210, 187, 11);
+  background:#0A429B;
   color: whitesmoke;
   font-size: 22px;
 }
 
 .title {
-  color: rgb(210, 187, 11);
+  color: #ffffff;
 }
 
 
@@ -130,7 +132,7 @@
   text-overflow: ellipsis;
   overflow-x: hidden;
   grid-area: 'name';
-  background-color: ;
+  /* background-color: ; */
 }
 
 .lastName {
@@ -168,7 +170,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
 .birthdate {
@@ -195,6 +197,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px
+  margin-right: 10px;
 }
 
