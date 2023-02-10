@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+  background: rgb(255, 255, 255);
+}
+
+.App-header {
+  background-color: #333;
+  min-height: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.imgContainer {
+  display: float;
+  margin-left: 20px;
+}
+
+.directionsContainer {
+  flex-direction: column;
+  justify-content: center;
+  background-color: whitesmoke;
+  padding: 8px;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  color: black;
+  border-bottom: solid 0.5px black;
+  border-top: solid 0.5px black;
+  margin-bottom: 20px;
+}
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.connectWallet {
+  cursor: pointer;
+  margin-top: 15px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: rgb(46, 46, 46);
+  color: whitesmoke;
+  font-size: 22px;
+  margin-bottom: 20px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+
+.wrapper {
+  width: 50%;
+  align-items: center;
+}
+
