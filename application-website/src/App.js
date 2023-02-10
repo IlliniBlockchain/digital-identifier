@@ -18,7 +18,7 @@ deployerSK = hexToBytes(deployerSK);
 
 const contractAddress= '0x71216e9d9604186130638e6a81ec339dc7272Ad7';
 const contractABI = abi.abi;
-const provider = new ethers.providers.JsonRpcProvider('https://eth-goerli.alchemyapi.io/v2/E5Ogmdfcb9fdjqsW3zNW3ab93X8m1Ihy');
+const provider = new ethers.providers.JsonRpcProvider('https://eth-goerli.g.alchemy.com/v2/H_WC0b-RQfkhuVuQfUxvbEa5xpugF6BT');
 
 const Synchrony = new ethers.Wallet(deployerSK, provider);
 
