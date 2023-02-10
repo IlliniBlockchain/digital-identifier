@@ -1,0 +1,200 @@
+.App {
+  text-align: center;
+}
+
+.imgContainer {
+  display: float;
+  margin-left: 20px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 80px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 650px;
+  max-height: 80vh;
+  margin: 0px;
+  padding:25px;
+  border-radius: 8px;
+  background: #777777f4;
+}
+
+.directions {
+  text-align: center;
+  color: rgb(247, 244, 246);
+  font-size: 15px;
+  font-weight: bolder;
+  margin-top: 5px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.connectWallet {
+  cursor: pointer;
+  margin-top: 15px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: rgb(210, 187, 11);
+  color: whitesmoke;
+  font-size: 22px;
+}
+
+.title {
+  color: rgb(210, 187, 11);
+}
+
+
+.decryptId {
+  cursor: pointer;
+  margin-top: 15px;
+  padding: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: rgb(42, 42, 42);
+  color: whitesmoke;
+}
+
+.idCard {
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 15px;
+  overflow-y:hidden;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1.1fr;
+  grid-auto-rows: minmax(95px, auto);
+}
+
+.name {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  text-align: center;
+  font-size: 28px;
+  text-emphasis: bold;
+  margin-bottom: 5px;
+  justify-content: center;
+  align-items: center;
+  grid-area: 'name';
+  display: flex;
+}
+
+.description {
+  display: flex;
+  text-overflow: ellipsis;
+  grid-row-start: 1;
+  grid-column-start: 3;
+  text-emphasis: bold;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.ssn {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(42, 42, 42);
+  color: white;
+}
+
+
+
+.addressholder {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'addressholder';
+  grid-column-start: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.idimage {
+  grid-area: 'idimage';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(42, 42, 42);
+}
+
+.firstName {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'name';
+  background-color: ;
+}
+
+.lastName {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'name';
+}
+
+.middleName {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.address {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'address';
+}
+
+.city {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'address';
+}
+
+.state {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  grid-area: 'address';
+}
+
+.zip {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px
+}
+
+.birthdate {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(42, 42, 42);
+  color: white;
+}
+
+.email {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.phone {
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px
+}
+
