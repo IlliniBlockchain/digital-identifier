@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import mainLogo from'./utils/SYF.png';
+import mainLogo from'./utils/Decentralized ID Logo.png';
 import abi from "./utils/ERC721Identifier.json";
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css';
@@ -175,7 +175,7 @@ function App() {
             <Navbar.Brand href="#home">
               <img src= {mainLogo} width='35' height='35' alt = 'synchrony               logo'className="d-inline-block align-top"
               />{' '}
-              Synchrony
+              Decentralized Digital Identity
             </Navbar.Brand>
           </div>  
         </div>
