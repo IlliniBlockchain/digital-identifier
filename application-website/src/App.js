@@ -220,7 +220,6 @@ const createNFT = async(walletAddress, IPFS_hash) => {
         params: [currentAccount],
       });
 
-
       const publicEncryptionKey = Buffer.from(keyB64, 'base64');
 
       console.log(publicEncryptionKey);
@@ -249,7 +248,7 @@ const createNFT = async(walletAddress, IPFS_hash) => {
           }
         },
         "pinataContent": {
-          "walletAddress": "HI"
+          "walletAddress": currentAccount
         }
       });
 

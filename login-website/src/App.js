@@ -27,10 +27,10 @@ function App() {
     const { ethereum } = window;
     
     let temp = jsonId;
+    console.log(jsonId);
 
     // iterating through every value in the json object except walletAddress (since it is unencrypted)
     Object.keys(jsonId).forEach((key) => {
-      if (key !== "walletAddress") {
         ethereum
           .request({
             method: 'eth_decrypt',
@@ -38,12 +38,12 @@ function App() {
           })
           .then(function(decryptedMessage) { 
             temp[key] = decryptedMessage;
-            //setDecryptedJsonId(temp);
+            // setDecryptedJsonId(temp);
             document.getElementById(key).innerText = decryptedMessage;
           })
           .catch((error) => console.log(error.message));
-        }
       })
+
     console.log("Calling now!");
     document.getElementById("decryptButton").style.display = 'none';
   }
