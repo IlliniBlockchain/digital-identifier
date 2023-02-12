@@ -10,8 +10,8 @@ The process looks like this:
 2. Customer fills out their information and submits
 3. The customer is prompted for their wallet public key to encrypt their sensitive information.  Once this happens only the customer can decrypt their information.  Not even Synchrony can.
 4. A transaction is sent to the Ethereum network (in this prototype it is the Goerli testnet) for an NFT to be minted to the customer.  This transaction is not sent by the customer, but rather by the Synchrony wallet that is “hard coded” into the website (more on this later).
-5. If the NFT is successfully created the customer’s encrypted data sent and stored in a database, currently using getSandbox.  Customer data is not actually stored within the NFT, but rather in an outside resource and a URI is stored within the NFTs that points to this outside resource.
-6. If the NFT is created and the customer data is successfully stored in the database, then we are done!
+5. If the NFT is successfully created the customer’s encrypted data sent and stored on IPFS using the Pinata API.  Customer data is not actually stored within the NFT, but rather in an outside resource and a URI is stored within the NFTs that points to this outside resource.
+6. If the NFT is created and the customer data is successfully stored to IPFS, then we are done!
 7. Should the NFT fail to be created it is most likely because the customer already has one in their wallet, although there are other possible reasons.
 
 ## Folder Breakdown

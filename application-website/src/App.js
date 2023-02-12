@@ -272,6 +272,10 @@ const createNFT = async(walletAddress, IPFS_hash) => {
           console.log(result.data);
         }).catch((err) => {
           // handle error here
+          console.log("An error occurred creating your NFT.  Make sure that this wallet does not already contain a digital Id.");
+          setAfterSubmitText("An error occurred creating your NFT.  Make sure that this wallet does not already contain a digital Id.");
+          throw (err)
+
         });
       } catch (e) {
         console.log("An error occurred creating your NFT.  Make sure that this wallet does not already contain a digital Id.")
