@@ -18,10 +18,12 @@ const main = async () => {
     const ETHERAPIKEY = process.env.ETHERAPIKEY;
     const INFURAAPIKEY = process.env.INFURAAPIKEY;
 
-    console.log(ALCHAPIKEY);
     // get a web3 provider
     const provider = await ethers.getDefaultProvider("goerli", { alchemy: ALCHAPIKEY, etherscan: ETHERAPIKEY, infura: INFURAAPIKEY});
     
+    // const network = "https://api.avax-test.network/ext/bc/C/rpc"
+    // const provider = ethers.getDefaultProvider(network)
+
     // Turning string into datahexstring
     console.log(deployerprivate);
     deployerprivate = hexToBytes(deployerprivate);
@@ -39,10 +41,11 @@ const main = async () => {
   
     const Token = await hre.ethers.getContractFactory("ERC721Identifier")
     const synchronyToken = await Token.connect(Synchrony);
-    const portal = await synchronyToken.deploy('Synchrony Digital ID Collection', 'Digital Identifier Collection for UPenn Hackathon', "https://identifier-database.getsandbox.com/identifiers/");
+    const portal = await synchronyToken.deploy('ONEID Digital Identifier Collection', 'Digital Identifier Collection for UPenn Hackathon', "");
     await portal.deployed();
   
     console.log("Contract address: ", portal.address);
+
   };
   
   const runMain = async () => {

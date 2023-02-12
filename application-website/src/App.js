@@ -9,17 +9,21 @@ import abi from "./utils/ERC721Identifier.json";
 import { ethers } from "ethers";
 import { encrypt } from '@metamask/eth-sig-util'
 import './App.css';
-const ethUtil = require('ethereumjs-util')
+import axios from 'axios';
 
+// const pinataSDK = require('@pinata/sdk');
+const ethUtil = require('ethereumjs-util')
 
 let deployerSK = process.env.REACT_APP_DEPLOYER_PRIVATE;
 
 deployerSK = hexToBytes(deployerSK);
+// const pinata_secret_api_key = process.env.PINATA_SECRET_API;
+// const pinata = new pinataSDK('b9316525f781c40bdfa2', pinata_secret_api_key);
 
-const contractAddress= '0x71216e9d9604186130638e6a81ec339dc7272Ad7';
+// const pinataJWTKey = process.env.PINATA_JWT;
+const contractAddress= '0x39E0D6e18B86776b47B3E4AaAACCDBA2b776A665';
 const contractABI = abi.abi;
 const provider = new ethers.providers.JsonRpcProvider('https://eth-goerli.g.alchemy.com/v2/H_WC0b-RQfkhuVuQfUxvbEa5xpugF6BT');
-
 const Synchrony = new ethers.Wallet(deployerSK, provider);
 
 //creating a new contract "instance" with Synchrony as the signer
@@ -31,6 +35,7 @@ const identifierContract = new ethers.Contract(contractAddress, contractABI, Syn
  * @param {string} hex The hexstring to turn into bytes 
  * @returns bytes
  */
+
 function hexToBytes(hex) {
   if (!hex) {
     return []
@@ -75,7 +80,7 @@ function createEncryptedJsonObject(publicEncryptionKey, walletaddress, firstname
   const idinfo = {
     walletAddress: walletaddress, 
     firstName: encryptData(publicEncryptionKey, firstname),
-    middlename: encryptData(publicEncryptionKey, middlename),
+    middleName: encryptData(publicEncryptionKey, middlename),
     lastName: encryptData(publicEncryptionKey, lastname),
     address: encryptData(publicEncryptionKey, address),
     unit: encryptData(publicEncryptionKey, unit),
@@ -87,8 +92,9 @@ function createEncryptedJsonObject(publicEncryptionKey, walletaddress, firstname
     ssn: encryptData(publicEncryptionKey, ssn), 
     _birthdate: encryptData(publicEncryptionKey, birthdate)
   } 
-  const jsonidinfo = JSON.stringify(idinfo);
-  return jsonidinfo;
+  // const jsonidinfo = JSON.stringify(idinfo);
+  // console.log(jsonidinfo);
+  return idinfo;
 }
 
 
@@ -119,10 +125,10 @@ function PersonalDataForm() {
  * @returns hash of transcation if successful
  */
 
-const createNFT = async(walletAddress) => {
+const createNFT = async(walletAddress, IPFS_hash) => {
   try {
     console.log("going to mint to wallet walletAddress", walletAddress);
-    const mintTxn = await identifierContract.mint(walletAddress);
+    const mintTxn = await identifierContract.mint(walletAddress, IPFS_hash );
     await console.log("Creating the NFT with hash: ", mintTxn.hash);
     await mintTxn.wait();
     console.log("Done! Another?")
@@ -197,10 +203,9 @@ const createNFT = async(walletAddress) => {
       setDisplayForm(false);
       setAfterSubmitText("Loading . . . ")
       
-      // Commented code is in the first step in migrating to ipfs instead of an API endpoint
-      // const ipfs = IPFS.create();
-      // const {cid} = ipfs.add('Hello World');
-      // console.info(cid);
+      identifierContract.balanceOf(currentAccount).then((result) => {
+        console.log("THIS ACCT HAS: ", ethers.BigNumber(result));
+      })
 
       // first we must create a json object from the data in our form, must be encrypted as well
       console.log("Going to create JSON object entry with " + currentAccount);
@@ -213,35 +218,65 @@ const createNFT = async(walletAddress) => {
         params: [currentAccount],
       });
 
+
       const publicEncryptionKey = Buffer.from(keyB64, 'base64');
 
       console.log(publicEncryptionKey);
 
-      setAfterSubmitText(" Encrypting . . .")
+      setAfterSubmitText(" Encrypting . . .");
       const encryptedJsonId = await createEncryptedJsonObject(publicEncryptionKey, currentAccount, firstName, middleName, lastName, address, unit, city, state, zip, email, phone, ssn, birthdate);
 
-      
-      // format the POST request
-      let xhr = new XMLHttpRequest();
-      xhr.open("POST", "https://identifier-database.getsandbox.com:443/identifiers");
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onload = function() {
-        if (this.status === 200) {
-          console.log("Successfully created NFT and the record for it.");
-          setAfterSubmitText("Successfully minted NFT to wallet address: " + currentAccount + ".  Please proceed to the login website!");
-          setValidated(true);
-        } else {
-          console.log(xhr.responseText);
+      console.log(encryptedJsonId.firstName);
+      var data = JSON.stringify({
+        "pinataOptions": {
+          "cidVersion": 1
+        },
+        "pinataMetadata": {
+          "name": currentAccount,
+          "keyvalues": {
+            "firstName": encryptedJsonId.firstName,
+            "middleName": encryptedJsonId.middleName,
+            "lastName": encryptedJsonId.lastname,
+            "address": encryptedJsonId.address,
+            "unit": encryptedJsonId.unit,
+            "city": encryptedJsonId.city,
+            "state": encryptedJsonId.state,
+            "zip": encryptedJsonId.zip,
+            "ssn": encryptedJsonId.ssn,
+            "birthdate": encryptedJsonId._birthdate
+          }
+        },
+        "pinataContent": {
+          "walletAddress": "HI"
         }
-      }
+      });
+
+      var config = {
+        method: 'post',
+        url: 'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJhOTRjZTdlYS1kNDhlLTQ4MWQtYWJhOC00NDg0NTczN2M5MmUiLCJlbWFpbCI6ImFudG9ueUBzaWx2ZXR0aXNjaG1pdHQubmV0IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImI5MzE2NTI1Zjc4MWM0MGJkZmEyIiwic2NvcGVkS2V5U2VjcmV0IjoiZjgzZGM2MzVhMzk2OGQ5NDM0YTEyMzRiNzRjYTc2ZmM2ZTBkYTlmMjgxODc1N2NiNDFhYzBlYTFjNDBhZGNlMyIsImlhdCI6MTY3NjEzNjU3Mn0.8dsREGZ5TEM3dfV_PblZUgqQo1QfqQP-zq7AXdmKQqE'
+        },
+        data : data
+      };
+    
+
       try {
         setAfterSubmitText("Creating NFT . . . Blockchain is a distributed system so this may take a few seconds");
-        await createNFT(currentAccount);
-        // if no error is thrown by createNFT, then we send the json to the server.
-        xhr.send(encryptedJsonId);
+        axios(config).then((result) => {
+          //handle results here
+          console.log("Successfully created NFT and the record for it.");
+          createNFT(currentAccount, result.data.IpfsHash);
+          setAfterSubmitText("Successfully Created identifier for address: " + currentAccount + ".  Please go to the login website!");
+          console.log(result.data);
+        }).catch((err) => {
+          // handle error here
+        });
       } catch (e) {
         console.log("An error occurred creating your NFT.  Make sure that this wallet does not already contain a digital Id.")
         setAfterSubmitText("An error occurred creating your NFT.  Make sure that this wallet does not already contain a digital Id.");
+        console.log(e);
       }
     }  
   };
@@ -428,6 +463,7 @@ const createNFT = async(walletAddress) => {
       </>
       )
     }
+
     { !displayform && (
       <>
       <p>{ afterSubmitText }</p>

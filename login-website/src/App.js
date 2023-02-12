@@ -4,6 +4,8 @@ import mainLogo from'./utils/Decentralized ID Logo.png';
 import abi from "./utils/ERC721Identifier.json";
 import Navbar from 'react-bootstrap/Navbar';
 import './App.css';
+// import { Grid, GridItem } from '@chakra-ui/react'
+// import Grid from "react-bootstrap/Grid"
 
 
 function App() {
@@ -16,8 +18,9 @@ function App() {
   const green = "#28b715b6";
   const red = "#ee0404b6";
 
-  const contractAddress = "0x71216e9d9604186130638e6a81ec339dc7272Ad7"; // to be added for the new contract that I make
+  const contractAddress = "0x39E0D6e18B86776b47B3E4AaAACCDBA2b776A665"; // to be added for the new contract that I make
   const contractABI = abi.abi;
+  const URL = 'https://api.pinata.cloud/data/pinList?status=pinned&hashContains=';
 
   const decryptJsonId = async () => {
     console.log("Calling Decrypt ID");
@@ -140,17 +143,18 @@ function App() {
     }
   }
 
-  const getId = async(URL) => {
+  const getId = async(IPFS_hash) => {
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", URL);
+    xhr.open("GET", URL + IPFS_hash);
+    xhr.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJhOTRjZTdlYS1kNDhlLTQ4MWQtYWJhOC00NDg0NTczN2M5MmUiLCJlbWFpbCI6ImFudG9ueUBzaWx2ZXR0aXNjaG1pdHQubmV0IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsInBpbl9wb2xpY3kiOnsicmVnaW9ucyI6W3siaWQiOiJGUkExIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9LHsiaWQiOiJOWUMxIiwiZGVzaXJlZFJlcGxpY2F0aW9uQ291bnQiOjF9XSwidmVyc2lvbiI6MX0sIm1mYV9lbmFibGVkIjpmYWxzZSwic3RhdHVzIjoiQUNUSVZFIn0sImF1dGhlbnRpY2F0aW9uVHlwZSI6InNjb3BlZEtleSIsInNjb3BlZEtleUtleSI6ImI5MzE2NTI1Zjc4MWM0MGJkZmEyIiwic2NvcGVkS2V5U2VjcmV0IjoiZjgzZGM2MzVhMzk2OGQ5NDM0YTEyMzRiNzRjYTc2ZmM2ZTBkYTlmMjgxODc1N2NiNDFhYzBlYTFjNDBhZGNlMyIsImlhdCI6MTY3NjEzNjU3Mn0.8dsREGZ5TEM3dfV_PblZUgqQo1QfqQP-zq7AXdmKQqE')
     xhr.responseType = 'json';
 
     // function that specifies what to do with the response once received
     xhr.onload = function() {
       if (this.status === 200) {
         console.log("Request response is 200.")
-        console.log(this.response);
-        setJsonId(this.response);
+        console.log(this.response.rows["0"]["metadata"]);
+        setJsonId(this.response.rows["0"]["metadata"]["keyvalues"]);
       } else {
         console.log("Couldn't find the ID in records, this should never happen.  This indicates that the records must have been corrupted or the blockchain was hacked (not likely).");
         return ("Couldn't find the ID in records, this should never happen.  This indicates that the records must have been corrupted or the blockchain was hacked (not likely).");
@@ -192,51 +196,50 @@ function App() {
             <div className="idCard">
 
               <div className="idimage">
-              <img src= {mainLogo} width='50' height='50' alt = 'synchrony logo'/>
+              <img src= {mainLogo} width='50' height='50' alt = 'one-id logo'/>
               </div>
               
               <div className="description">
-                Synchrony Digital ID
+                ONEID
               </div>
               <div className="name">
               <div id="lastName" className="lastName">
-                {jsonId.lastName}
+                {/* {jsonId.lastName} */} Silvetti-Schmitt
               </div>,&nbsp;
               <div id="middleName" className="middleName">
-                {jsonId.middleName}
+                {/* {jsonId.middleName} Nathan */}
               </div>
               <div id="firstName" className="firstName">
-                {jsonId.firstName}
+                {/* {jsonId.firstName} */} Antony
               </div>
         
               </div>
               <div className="ssn" id="ssn">
-                {jsonId.ssn}
+                {/* {jsonId.ssn} */} 123-23-3425
               </div>
               <div className="addressholder">
               <div className="address" id="address">
-                {jsonId.address}
+                {/* {jsonId.address} */} 1011 N. Grove Ave.
               </div>,&nbsp;
               <div className="city" id="city">
-                {jsonId.city}
+                {/* {jsonId.city} */} Oak Park
               </div>,&nbsp;
               <div id="state" className="state">
-                {jsonId.state},
+                {/* {jsonId.state} */} IL
               </div>
               </div>
               <div id="zip" className="zip">
-                {jsonId.zip}
+                {/* {jsonId.zip} */} 60302
               </div>
-              <div className="birthdate" id="_birthdate">
-                {jsonId._birthdate}
+              <div className="birthdate" id="birthdate">
+                {/* {jsonId.birthdate} */} 03/29/2002
               </div>
-              <div className="email" id="email">
+              {/* <div className="email" id="email">
                 {jsonId.email}
-              </div>
-              <div className="phone" id="phone">
+              </div> */}
+              {/* <div className="phone" id="phone">
                 {jsonId.phone}
-              </div>
-              
+              </div> */}
             </div>
             <button id = "decryptButton" className="decryptId" onClick={decryptJsonId}>Decrypt ID!</button>
           </>

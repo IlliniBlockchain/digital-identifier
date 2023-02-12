@@ -70,8 +70,9 @@
   border-radius: 15px;
   overflow-y:hidden;
   display: grid;
-  grid-template-columns: 1fr 4fr 1.1fr;
+  grid-template-columns: 1.1fr 3.3fr 1.1fr;
   grid-auto-rows: minmax(95px, auto);
+  justify-content: center;
 }
 
 .name {
@@ -85,17 +86,21 @@
   align-items: center;
   grid-area: 'name';
   display: flex;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
 }
 
 .description {
   display: flex;
   text-overflow: ellipsis;
-  grid-row-start: 1;
-  grid-column-start: 3;
+  grid-row-start: 2;
+  grid-column-start: 1;
   text-emphasis: bold;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
+  background-color: rgb(42, 42, 42);
+  color: white;
 }
 
 .ssn {
@@ -104,8 +109,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(42, 42, 42);
-  color: white;
+  /* background-color: rgb(42, 42, 42);
+  color: white; */
+  margin-right: 15px;
 }
 
 
