@@ -204,35 +204,35 @@ function App() {
               </div>
               <div className="name">
               <div id="lastName" className="lastName">
-                {/* {jsonId.lastName} */} Silvetti-Schmitt
+                {jsonId.lastName} 
               </div>,&nbsp;
               <div id="middleName" className="middleName">
-                {/* {jsonId.middleName} Nathan */}
+                {jsonId.middleName}
               </div>
               <div id="firstName" className="firstName">
-                {/* {jsonId.firstName} */} Antony
+                {jsonId.firstName}
               </div>
         
               </div>
               <div className="ssn" id="ssn">
-                {/* {jsonId.ssn} */} 123-23-3425
+                {jsonId.ssn}
               </div>
               <div className="addressholder">
               <div className="address" id="address">
-                {/* {jsonId.address} */} 1011 N. Grove Ave.
+                {jsonId.address}
               </div>,&nbsp;
               <div className="city" id="city">
-                {/* {jsonId.city} */} Oak Park
+                {jsonId.city}
               </div>,&nbsp;
               <div id="state" className="state">
-                {/* {jsonId.state} */} IL
+                {jsonId.state}
               </div>
               </div>
               <div id="zip" className="zip">
-                {/* {jsonId.zip} */} 60302
+                {jsonId.zip}
               </div>
               <div className="birthdate" id="birthdate">
-                {/* {jsonId.birthdate} */} 03/29/2002
+                {jsonId.birthdate}
               </div>
               {/* <div className="email" id="email">
                 {jsonId.email}
